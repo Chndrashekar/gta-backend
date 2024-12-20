@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "site": "gta-dev-6bdb9-2e378",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

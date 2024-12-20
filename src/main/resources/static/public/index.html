@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Signup and Token Retrieval</title>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAZfOlbVoX2l3FphqQCZ6R3niP5FLIkZNU",
+      authDomain: "gta-dev-6bdb9.firebaseapp.com",
+      projectId: "gta-dev-6bdb9",
+      storageBucket: "gta-dev-6bdb9.firebasestorage.app",
+      messagingSenderId: "167130304690",
+      appId: "1:167130304690:web:6ad82d5fa3a370640b39ab",
+      measurementId: "G-S5T91Y2PJ0"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Function to handle user signup
+    async function signUpAndGetToken() {
+        const email = prompt("Enter your email:");
+        const password = prompt("Enter your password:");
+
+        try {
+            // Sign up the user
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            console.log("User signed up successfully", userCredential.user);
+
+            // Get token for the signed-up user
+            const idToken = await userCredential.user.getIdToken();
+            document.getElementById("tokenDisplay").innerText = "User ID Token: " + idToken;
+            console.log("User ID Token:", idToken);
+        } catch (error) {
+            console.error("Error during signup: ", error.message);
+            alert("Signup failed: " + error.message);
+        }
+    }
+
+    window.onload = () => {
+        document.getElementById("signupButton").onclick = signUpAndGetToken;
+    };
+  </script>
+</head>
+<body>
+<h2>Firebase User Signup and Token Retrieval</h2>
+<button id="signupButton">Sign Up and Get Token</button>
+<div id="tokenDisplay" style="margin-top: 20px;"></div>
+</body>
+</html>
